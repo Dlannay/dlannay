@@ -1,6 +1,16 @@
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var webpack = require('webpack');
 var path = require('path');
+
+var isProd = process.env.NODE_ENV === 'production'; // return true or false
+var cssDev = ['style-loader','css-loader','sass-loader'];
+var cssProd = ExtractTextPlugin.extract({
+   fallback: 'style-loader',
+   loader: ['css-loader','sass-loader'],
+   publicPath: '/dist'
+})
+var cssConfig = isProd ? cssProd : cssDev;
 
 module.exports = {
   entry: {
@@ -15,12 +25,8 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader', //resolve-url-loader may be chained before sass-loader if necessary
-          use: ['css-loader', 'sass-loader'],
-          publicPath: '/dist'
-        })
-      },
+        use: cssConfig
+      },      
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -28,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.pug$/,
-        use: ['html-loader', 'pug-html-loader']
+        use: ['html-loader','pug-html-loader']
       }
     ]
   },
@@ -37,6 +43,7 @@ module.exports = {
     compress: true,
     port: 8080,
     stats: 'errors-only',
+    hot: true,
     open: true
   },
   plugins: [
@@ -48,7 +55,7 @@ module.exports = {
       hash: true,
       excludeChunks: ['contact'],
       filename: './../dist/index.html',
-      template: './src/index.pug' // Load a custom template (ejs by default see the FAQ for details)
+      template: './src/index.pug'
     }),
     new HtmlWebpackPlugin({
       title: 'Contact Page',
@@ -59,8 +66,10 @@ module.exports = {
     }),
     new ExtractTextPlugin({
       filename: 'app.css',
-      disable: false,
+      disable: !isProd,
       allChunks: true
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin()
   ]
 }
