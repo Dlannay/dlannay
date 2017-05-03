@@ -69,7 +69,7 @@ module.exports = {
       hash: true,
       chunks: ['contact'],
       filename: './../dist/contact.html',
-      template: './src/contact.ejs'
+      template: './src/contact.pug'
     }),
     new ExtractTextPlugin({
       filename: 'app.css',
