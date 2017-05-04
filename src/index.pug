@@ -1,19 +1,48 @@
 doctype html
-html(lang="en")
+html(lang='en')
   head
-    title= pageTitle
-    script(type='text/javascript').
-      if (foo) bar(1 + 5)
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(http-equiv='X-UA-Compatible', content='ie=edge')
+    title Webpack 2 and Twitter Bootstrap
   body
-    #root
-    include includes/header.pug
-    h1 Pug - node template engine
-    #container.col
-      img(src='./images/html5.png', alt='')
-      if youAreUsingPug
-        p You are amazing
-      else
-        p Get on it!
-      p.
-        Pug is a terse and simple templating language with a
-        strong focus on performance and powerful features.
+    .container
+      .row
+        .col-md-4
+          img(src='./images/bootstrap.png', alt='')
+          include includes/header.pug
+          #root
+          p
+            | /&gt;
+        .col-md-8
+          h1 Webpack 2 and Twitter Bootstrap
+          h2 How to configure Webpack 2 to load Twitter Bootstrap SCSS and JavaScript?
+          |  
+          button.btn.btn-primary.btn-lg(type='button', data-toggle='modal', data-target='#myModal')  Launch demo modal
+          .dropdown
+            button#dropdownMenu1.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='true')
+              | Dropdown
+              span.caret
+            ul.dropdown-menu(aria-labelledby='dropdownMenu1')
+              li
+                a(href='#') Action
+              li
+                a(href='#') Another action
+              li
+                a(href='#') Something else here
+              li.divider(role='separator')
+              li
+                a(href='#') Separated link
+          #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel')
+            .modal-dialog(role='document')
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                  h4#myModalLabel.modal-title Modal title
+                .modal-body
+                  p Some text goes here.
+                .modal-footer
+                  button.btn.btn-default(type='button', data-dismiss='modal') Close
+                  |  
+                  button.btn.btn-primary(type='button') Save changes
